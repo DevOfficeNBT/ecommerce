@@ -12,8 +12,8 @@ const {
 //Routes to the for a specific
 router.route("/products").get(getAllProducts);
 router.route("/products/create").post(newProduct);
-router.route("/products/update/:id").put(updateProducts);
-router.route("/products/delete/:id").delete(deleteProducts);
+router.route("/products/change/:id").put(updateProducts);
+router.route("/products/change/:id").delete(deleteProducts);
 
 //Exporting the modules
 module.exports = router;

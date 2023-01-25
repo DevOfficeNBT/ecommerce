@@ -19,7 +19,8 @@ exports.getAllProducts = async (req, res) => {
 exports.updateProducts = async (req, res) => {
   const products = await Product.findById(req.params.id);
   if (!products) {
-    res.status(400).json({ success: false, msg: "Bad request" });
+    console.log("not found");
+    return res.status(400).json({ success: false, msg: "Not Found" });
   }
   const uproduct = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -29,10 +30,15 @@ exports.updateProducts = async (req, res) => {
   res.status(200).json({ success: true, uproduct });
 };
 exports.deleteProducts = async (req, res) => {
-  const products = await Product.findById(req.params.id);
-  if (!products) {
-    res.status(400).json({ success: false, msg: "Bad request" });
+  try {
+    const products = await Product.findById(req.params.id);
+    if (!products) {
+      console.log("not found");
+      return res.status(400).json({ success: false, msg: "Not Found" });
+    }
+    const dproduct = await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true, dproduct });
+  } catch (err) {
+    res.status(500).json({ success: false, msg: "Something went wrong" });
   }
-  const dproduct = await Product.findByIdAndDelete(req.params.id);
-  res.status(200).json({ success: true, dproduct });
 };
