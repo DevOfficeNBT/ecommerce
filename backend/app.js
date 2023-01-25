@@ -6,8 +6,8 @@ const app = express();
 app.use(express.json());
 
 //Routes import
-const product = require("./routes/products");
-app.use("/api/v1", product);
+const products = require("./routes/products");
+app.use("/api/v1", products);
 
 //Exporting the modules
 module.exports = app;
