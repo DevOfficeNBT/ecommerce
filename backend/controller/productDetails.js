@@ -20,7 +20,8 @@ exports.newProduct = async (req, res, next) => {
 exports.getAllProducts = async (req, res) => {
   try {
     const item = await filter(req.query);
-    const products = await Product.find(item);
+    let products = await Product.find(item);
+    products = products.reverse();
     const data = paging(products, req.query.page, req.query.pageSize);
     res.status(200).json({
       success: true,
