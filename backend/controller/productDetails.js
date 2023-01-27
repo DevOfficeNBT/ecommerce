@@ -21,12 +21,12 @@ exports.getAllProducts = async (req, res) => {
   try {
     const item = await filter(req.query);
     const products = await Product.find(item);
-    const finalProduct = paging(products, req.query.page, req.query.pageSize);
+    const data = paging(products, req.query.page, req.query.pageSize);
     res.status(200).json({
       success: true,
       totalResult: products.length,
       pagingDetails: [{ page: req.query.page, pageSize: req.query.pageSize }],
-      finalProduct,
+      data,
     });
   } catch (err) {
     console.log(err);
