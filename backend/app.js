@@ -10,4 +10,12 @@ const products = require("./routes/products");
 app.use("/api/v1", products);
 
 //Exporting the modules
-module.exports = app;
+const server = (module.exports = app);
+
+process.on("unhandledRejection", (err) => {
+  console.log(`Server closed due to ${err}`);
+  console.log(err.stack);
+  server.close(() => {
+    process.exit(1);
+  });
+});
