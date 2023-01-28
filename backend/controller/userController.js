@@ -65,17 +65,18 @@ exports.login = async (req, res) => {
         .status(401)
         .json({ success: false, msg: "Email or Password is incorrect!" });
     }
-    //If no user password check
+    //If user exists then password password match
     const isMatched = await bcryptjs.compare(password, user.password);
     if (!isMatched) {
       return res
         .status(401)
         .json({ success: false, msg: "Email or Password is incorrect!" });
     }
-    //preparing ID from user data for JWT token
+    //If pass match success preparing ID from user data for JWT token
     const data = { user: { id: user.id } };
     const token = jwt.sign(data, process.env.Secret);
     res.cookie("token", token);
+    //Sending token if everything is okay
     res.status(200).json({ success: true, token });
   } catch (err) {
     console.log(err);
