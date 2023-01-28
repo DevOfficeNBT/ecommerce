@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 exports.checkAuth = async (req, res, next) => {
   try {
-    console.log(req.cookies);
     if (!req.cookies.token) {
       return res.status(401).json({
         success: false,
@@ -19,7 +18,6 @@ exports.checkAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    console.log(user);
     console.log(err);
     return res
       .status(500)

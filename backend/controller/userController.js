@@ -16,14 +16,11 @@ exports.register = async (req, res) => {
     }
     //validation
     if (!validator.isEmail(email)) {
-      console.log("its not an email");
       return res
         .status(400)
         .json({ success: false, msg: "Enter correct email" });
     }
-    console.log(password);
     if (!validator.isLength(password, { min: 8 })) {
-      console.log("its not an email");
       return res
         .status(400)
         .json({ success: false, msg: "Password should be long" });

@@ -44,7 +44,6 @@ exports.updateProducts = async (req, res) => {
   try {
     const products = await Product.findById(req.params.id);
     if (!products) {
-      console.log("not found");
       return res.status(400).json({ success: false, msg: "Not Found" });
     }
     const uproduct = await Product.findByIdAndUpdate(req.params.id, req.body, {
@@ -63,7 +62,6 @@ exports.deleteProducts = async (req, res) => {
   try {
     const products = await Product.findById(req.params.id);
     if (!products) {
-      console.log("not found");
       return res.status(400).json({ success: false, msg: "Not Found" });
     }
     const dproduct = await Product.findByIdAndDelete(req.params.id);
