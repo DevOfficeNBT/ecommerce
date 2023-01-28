@@ -94,3 +94,42 @@ exports.logout = async (req, res) => {
       .json({ success: false, msg: "Internal server error" });
   }
 };
+
+exports.changePassword = async (req, res) => {
+  if (!req.user) {
+    return res.status(400).json({
+      sucess: false,
+      msg: "Please authenticate with correct credencials",
+    });
+  }
+  try {
+    const user = await UserModel.findById(req.user.user.id).select("+password");
+    if (!user) {
+      return res.status(400).json({ success: false, msg: "Bad request" });
+    }
+    const { oldpassword, newpassword } = req.body;
+    if (!oldpassword || !newpassword) {
+      return res.status(400).json({ success: false, msg: "Bad request" });
+    }
+    const isMatched = await bcryptjs.compare(oldpassword, user.password);
+    if (!isMatched) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Old password should be accurate" });
+    }
+    const salt = await bcryptjs.genSalt(10);
+    const hash = await bcryptjs.hash(newpassword, salt);
+    if (user.password == hash) {
+    }
+    await UserModel.findByIdAndUpdate(req.user.user.id, { password: hash });
+    res
+      .status(200)
+      .json({ success: true, msg: "Password successfully updated" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      sucess: false,
+      msg: "Internal server error",
+    });
+  }
+};

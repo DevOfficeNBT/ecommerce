@@ -11,7 +11,8 @@ exports.filter = async (param) => {
     item.category = category;
   }
   if (gp || lp) {
-    item.price = { $gte: lp, $lte: gp };
+    item.price = { $gte: lp ? lp : 0, $lte: gp ? gp : 999999 };
+    console.log(item.price);
   }
   return item;
 };
