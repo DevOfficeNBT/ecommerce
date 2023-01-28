@@ -8,10 +8,12 @@ const {
   updateProducts,
   deleteProducts,
   productDetail,
-} = require("../controller/productDetails");
+} = require("../controller/productController");
+
+const { checkAuth } = require("../middlewares/checkAuth");
 
 //Routes to the for a specific
-router.route("/products").get(getAllProducts);
+router.route("/products").get(checkAuth, getAllProducts);
 router.route("/products/create").post(newProduct);
 router
   .route("/products/:id")

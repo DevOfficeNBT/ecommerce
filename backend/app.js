@@ -1,13 +1,20 @@
 //importing modules
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 //For using JSON
 app.use(express.json());
 
+//For cookiePraser
+app.use(cookieParser());
+
 //Routes import
-const products = require("./routes/products");
-app.use("/api/v1", products);
+const productRoutes = require("./routes/productRoutes");
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/v1", productRoutes);
+app.use("/api/v1", userRoutes);
 
 //Exporting the modules
 const server = (module.exports = app);

@@ -2,6 +2,7 @@
 const Product = require("../models/ProductModel");
 const { filter } = require("../utils/filter");
 const { paging } = require("../utils/paging");
+const cookie = require("cookie-parser");
 
 //Create product controller
 exports.newProduct = async (req, res, next) => {
